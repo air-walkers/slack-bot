@@ -1,12 +1,4 @@
     /*implement the gfda commands here
-    
-    we need:
-    -a JSON object with random quotes
-    -a JSON object with random advice (sometimes with picture)
-    -A rant picture
-    -A JSON object with random quotes safe for work
-    -A JSON object with help text
-    
     /gfda > random quote (if q.text is empty send a random quote from a file)
     /gfda [#] > random advice text (sometimes with a picture)
     /gfda rant > shows a picture with quotes. Always same pictures
@@ -40,10 +32,12 @@ module.exports = {
               'Always use a fucking contract.',
             ],
     
-    '#': [],
+    'rant': { },
     
-    'rant': [ ],
-    
-    'help': 'some help text'
+    'help': '*What does it all fucking mean?*\n' +
+            '/gfda, A random snippet of good fucking design advice\n' +
+            '/gfda [ID], When you\'re feeling really fucking specific\n' +
+            '/gfda rant, When you need some classic fucking advice\n' +
+            '/gfda sfw, Slightly censored & safe for work — try with /gfda [ID], /gfda rant, /gfda help',
     
 };

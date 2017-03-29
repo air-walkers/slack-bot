@@ -7,15 +7,11 @@
     "start": "nf start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "slack",
-    "slack-bot",
-    "bot",
-  ],
   "author": "Matt and Jay",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "request": "^2.81.0"
   }
 }

@@ -2,6 +2,7 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const request = require('request');
 const app = express();
 
 const gfda = require('./gfda.js');
@@ -65,4 +66,47 @@ app.post('/', (req, res) => {
     res.json(data);
     
 });
+
+app.get('/', function(req,res){
+//Your node app will receive a temporary code from Slack via GET. The temp code expires in 10 min.    
+    
+    var data = {form: {
+     
+        client_id: process.env.SLACK_CLIENT_ID,
+        client_secret: process.env.SLACK_CLIENT_SECRET,
+        code: req.query.code
+        
+    }};
+    
+//Exchange the authorization code for an access token using the oauth.access API by POSTing. The auth process is done when your node app receives 200 OK. 
+
+    request.post('https://slack.com/api/oauth.access', data, function(error,response,body){
+        
+        if(!error && response.statusCode == 200){
+            
+            //done
+            //get token for team info
+            let token = JSON.parse(body).access_token;
+            
+            console.log(token);
+        
+            //POST to slack to get team info and re-direct to team chat
+            request.post('https://slack.com/api/team.info', {form: {token:token}}, function(error,response,body){
+            
+               if(!error && response.statusCode == 200){
+                   
+                   let team = JSON.parse(body).team.domain;
+                   res.redirect('http://' + team + '.slack.com');
+                   
+               } 
+            
+            });
+        
+            
+        }
+        
+    });
+    
+});
+
 
